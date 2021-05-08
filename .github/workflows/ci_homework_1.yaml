@@ -15,7 +15,7 @@ jobs:
            python-version: '3.8'
            architecture: x64
       - run: |
-          python setup install
+          python setup.py install
       - run: |
           pylint run_pipeline.py ml_project --exit-zero
       - run: |
