@@ -2,3 +2,6 @@
 .idea
 outputs/
 *pkl
+*.ipynb_checkpoints/
+*csv
+__pycache__/
