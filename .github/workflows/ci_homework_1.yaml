@@ -17,6 +17,6 @@ jobs:
       - run: |
           python setup.py install
       - run: |
-          pylint run_pipeline.py ml_project --exit-zero
+          flake8
       - run: |
           pytest
