@@ -9,7 +9,7 @@ from ml_project.train import train_model
 
 @pytest.fixture
 def train_params(categorical_features: List[str], numerical_features: List[str],
-                 features_to_drop: List[str], target_col: str) -> DictConfig:
+                 features_to_drop: List[str], target_col: str, dataset_path: str) -> DictConfig:
 
     params_dict = {
         "model": {
@@ -27,7 +27,7 @@ def train_params(categorical_features: List[str], numerical_features: List[str],
             "target_column": target_col
         },
         "general": {
-            "data_path": "data/heart.csv",
+            "data_path": dataset_path,
             "model_output_path": "model.pkl",
             "extractor_output_path": "extractor.pkl",
             "metrics_path": "metrics.json"
