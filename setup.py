@@ -16,7 +16,8 @@ setup(
         "hydra-core==1.1.0.dev6",
         "pytest==6.2.4",
         "Faker==8.1.2",
-        "dacite==1.6.0"
+        "dacite==1.6.0",
+        "pytest-order==0.11.0"
     ],
     license="MIT",
 )

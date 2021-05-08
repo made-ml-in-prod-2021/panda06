@@ -20,6 +20,7 @@ def eval_params(dataset_path: str) -> EvalParams:
     return from_dict(data_class=EvalParams, data=params_dict)
 
 
+@pytest.mark.order(2)
 def test_eval_full_pipeline(eval_params: EvalParams):
     eval_model(eval_params)
     assert os.path.exists(eval_params.output_data_path)
