@@ -39,6 +39,7 @@ def train_params(categorical_features: List[str],
     return OmegaConf.create(params_dict)
 
 
+@pytest.mark.order(1)
 def test_train_full_pipeline(train_params: DictConfig):
     train_model(train_params)
     assert os.path.exists(train_params.general.model_output_path)
