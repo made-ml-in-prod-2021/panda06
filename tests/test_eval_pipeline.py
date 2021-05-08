@@ -9,10 +9,10 @@ from ml_project.entities import EvalParams
 
 
 @pytest.fixture
-def eval_params() -> EvalParams:
+def eval_params(dataset_path: str) -> EvalParams:
 
     params_dict = {
-        "data_path": "data/heart.csv",
+        "data_path": dataset_path,
         "model_path": "model.pkl",
         "extractor_path": "extractor.pkl",
         "output_data_path": "predicts.csv"
