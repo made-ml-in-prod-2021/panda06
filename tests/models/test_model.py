@@ -5,7 +5,6 @@ import numpy as np
 import pandas as pd
 import pytest
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
 from sklearn.exceptions import NotFittedError
 
 from ml_project.features import FeatureExtractor
@@ -13,7 +12,9 @@ from ml_project.models import Model
 
 
 @pytest.fixture
-def preprocess_data(fake_data: pd.DataFrame, extractor: FeatureExtractor) -> Tuple[pd.DataFrame, pd.Series]:
+def preprocess_data(fake_data: pd.DataFrame,
+                    extractor: FeatureExtractor) -> Tuple[pd.DataFrame,
+                                                          pd.Series]:
     transformer = extractor.build_transformer()
     X = transformer.fit_transform(fake_data)
     target = extractor.extract_target(fake_data)
@@ -26,7 +27,8 @@ def test_serialize_and_deserialize_model(serialized_model_path: str):
     assert os.path.exists(serialized_model_path)
     loaded_model = Model.deserialize(serialized_model_path)
     assert isinstance(loaded_model, Model)
-    assert hasattr(loaded_model, "model") and isinstance(loaded_model.model, RandomForestClassifier)
+    assert hasattr(loaded_model, "model") and \
+           isinstance(loaded_model.model, RandomForestClassifier)
 
 
 def test_evaluate():
@@ -37,7 +39,8 @@ def test_evaluate():
     assert all(0 <= x <= 1 for x in metrics.values()), metrics
 
 
-def test_train_model(model: Model, preprocess_data: Tuple[pd.DataFrame, pd.Series]):
+def test_train_model(model: Model,
+                     preprocess_data: Tuple[pd.DataFrame, pd.Series]):
     X, y = preprocess_data
     model.train_model(X, y)
     try:
@@ -47,7 +50,8 @@ def test_train_model(model: Model, preprocess_data: Tuple[pd.DataFrame, pd.Serie
         assert False
 
 
-def test_predict_model(model: Model, preprocess_data: Tuple[pd.DataFrame, pd.Series]):
+def test_predict_model(model: Model,
+                       preprocess_data: Tuple[pd.DataFrame, pd.Series]):
     X, y = preprocess_data
     model.train_model(X, y)
     predict = model.predict(X)

@@ -8,8 +8,10 @@ from ml_project.train import train_model
 
 
 @pytest.fixture
-def train_params(categorical_features: List[str], numerical_features: List[str],
-                 features_to_drop: List[str], target_col: str, dataset_path: str) -> DictConfig:
+def train_params(categorical_features: List[str],
+                 numerical_features: List[str],
+                 features_to_drop: List[str],
+                 target_col: str, dataset_path: str) -> DictConfig:
 
     params_dict = {
         "model": {

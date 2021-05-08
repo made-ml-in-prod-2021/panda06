@@ -21,7 +21,8 @@ def test_serialize_and_deserialize_extractor(serialized_extractor_path: str,
     assert isinstance(loaded_model, FeatureExtractor)
 
 
-def test_extract_target(fake_data: pd.DataFrame, target_col: str, extractor: FeatureExtractor):
+def test_extract_target(fake_data: pd.DataFrame, target_col: str,
+                        extractor: FeatureExtractor):
     target = extractor.extract_target(fake_data)
     assert np.all(target == fake_data[target_col])
 
@@ -31,12 +32,14 @@ def test_build_transformer(extractor: FeatureExtractor):
     assert isinstance(transformer, ColumnTransformer)
 
 
-def create_categorical_data(n_rows: int, n_cols: int, max_val: int) -> pd.DataFrame:
+def create_categorical_data(n_rows: int, n_cols: int,
+                            max_val: int) -> pd.DataFrame:
     fake = Faker()
     data = []
     for _ in range(n_rows):
-        data.append(fake.random_elements(elements=OrderedDict([(i, 0.25) for i in range(max_val + 1)]),
-                                         length=n_cols))
+        data.append(fake.random_elements(
+            elements=OrderedDict([(i, 0.25) for i in range(max_val + 1)]),
+            length=n_cols))
     return pd.DataFrame(data)
 
 
@@ -44,7 +47,8 @@ def create_numerical_data(n_rows: int, n_cols: int) -> pd.DataFrame:
     fake = Faker()
     data = []
     for _ in range(n_rows):
-        data.append([fake.pyint(min_value=29, max_value=77) for _ in range(n_cols)])
+        data.append([fake.pyint(min_value=29, max_value=77)
+                     for _ in range(n_cols)])
     return pd.DataFrame(data)
 
 
@@ -73,12 +77,13 @@ def test_numerical__pipeline(extractor: FeatureExtractor):
     assert np.all((1 - EPS <= stds) & (stds <= 1 + EPS))
 
 
-def test_fit_transform(extractor: FeatureExtractor, fake_data: pd.DataFrame, feature_params: FeatureParams):
+def test_fit_transform(extractor: FeatureExtractor,
+                       fake_data: pd.DataFrame,
+                       feature_params: FeatureParams):
     df = extractor.fit_transform(fake_data)
-    expected_shape = (fake_data.shape[0],
-                      len(feature_params.numerical_features) + \
-                      fake_data[feature_params.categorical_features].nunique().sum()
-    )
+    cat_num = fake_data[feature_params.categorical_features].nunique().sum()
+    n_cols = len(feature_params.numerical_features) + cat_num
+    expected_shape = (fake_data.shape[0], n_cols)
     assert df.shape == expected_shape
     means = np.mean(df, axis=0)
     assert np.all((-1 <= means) & (means <= 1))

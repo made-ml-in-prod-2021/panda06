@@ -1,11 +1,10 @@
 import os
-from typing import List
-from dacite import from_dict
-import pytest
-from omegaconf import OmegaConf, DictConfig
 
-from ml_project.eval import eval_model
+import pytest
+from dacite import from_dict
+
 from ml_project.entities import EvalParams
+from ml_project.eval import eval_model
 
 
 @pytest.fixture
@@ -24,4 +23,3 @@ def eval_params(dataset_path: str) -> EvalParams:
 def test_eval_full_pipeline(eval_params: EvalParams):
     eval_model(eval_params)
     assert os.path.exists(eval_params.output_data_path)
-

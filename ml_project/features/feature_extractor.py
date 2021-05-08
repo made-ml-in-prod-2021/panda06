@@ -41,7 +41,8 @@ class FeatureExtractor(TransformerMixin):
     def build_categorical_pipeline() -> Pipeline:
         categorical_pipeline = Pipeline(
             [
-                ("impute", SimpleImputer(missing_values=np.nan, strategy="most_frequent")),
+                ("impute", SimpleImputer(missing_values=np.nan,
+                                         strategy="most_frequent")),
                 ("ohe", OneHotEncoder()),
             ]
         )

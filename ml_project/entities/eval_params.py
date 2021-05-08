@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-from .feature_params import FeatureParams
 
 
 @dataclass()

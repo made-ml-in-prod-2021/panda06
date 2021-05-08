@@ -3,11 +3,10 @@ import sys
 
 import hydra
 import pandas as pd
-from hydra.core.config_store import ConfigStore
 
 from ml_project.data import read_data
-from ml_project.features import FeatureExtractor
 from ml_project.entities import EvalParams
+from ml_project.features import FeatureExtractor
 from ml_project.models import Model
 
 logger = logging.getLogger(__name__)
@@ -19,15 +18,15 @@ logger.addHandler(handler)
 @hydra.main(config_path="configs", config_name="eval_config")
 def eval_model(cfg: EvalParams):
     model = Model.deserialize(cfg.model_path)
-    logger.info(f"Loaded model")
+    logger.info("Loaded model")
 
     feature_extractor = FeatureExtractor.deserialize(cfg.extractor_path)
-    logger.info(f"Loaded feature extractor")
+    logger.info("Loaded feature extractor")
 
     data = read_data(cfg.data_path)
     logger.info(f"Data size is {data.shape[0]}")
     X = feature_extractor.transform(data)
-    logger.info(f"Created dataset")
+    logger.info("Created dataset")
 
     predicts = model.predict(X)
     logger.info("Predicted")
