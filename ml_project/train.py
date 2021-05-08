@@ -29,15 +29,15 @@ def train_model(cfg: DictConfig):
     logger.info(f"Val data size is {test_data.shape[0]}")
 
     feature_extractor = FeatureExtractor(cfg.feature_params)
-    logger.info(f"Created feature extractor")
+    logger.info("Created feature extractor")
 
     X_train = feature_extractor.fit_transform(train_data)
     y_train = feature_extractor.extract_target(train_data)
-    logger.info(f"Created train dataset")
+    logger.info("Created train dataset")
 
     X_test = feature_extractor.transform(test_data)
     y_test = feature_extractor.extract_target(test_data)
-    logger.info(f"Created val dataset")
+    logger.info("Created val dataset")
 
     model.train_model(X_train, y_train)
     predicts = model.predict(X_test)

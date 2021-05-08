@@ -21,7 +21,8 @@ class Model:
         return self.model.predict(X)
 
     @staticmethod
-    def evaluate_model(predicts: np.ndarray, targets: pd.Series) -> Dict[str, float]:
+    def evaluate_model(predicts: np.ndarray,
+                       targets: pd.Series) -> Dict[str, float]:
         return {
             "rmse": mean_squared_error(targets, predicts, squared=False),
             "mae": mean_absolute_error(targets, predicts),
