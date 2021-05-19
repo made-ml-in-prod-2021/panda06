@@ -19,6 +19,12 @@ def dataset_path():
 
 
 @pytest.fixture
+def test_dataset_path():
+    curdir = os.path.dirname(__file__)
+    return os.path.join(curdir, "data/test_heart.csv")
+
+
+@pytest.fixture
 def fake_data() -> pd.DataFrame:
     fake = Faker()
     Faker.seed(42)
