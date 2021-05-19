@@ -67,6 +67,9 @@ class FeatureExtractor(TransformerMixin):
         target = df[self.target_col]
         return target
 
+    def drop_target(self, df: pd.DataFrame) -> pd.Series:
+        return df.drop(columns=[self.target_col])
+
     def serialize(self, path: str) -> None:
         with open(path, 'wb') as f:
             pickle.dump(self, f)
