@@ -8,7 +8,7 @@
 
 ```docker pull panda06/online_inference:latest```
 
-```docker run -p 8080:8080 online_inference:latest```
+```docker run -p 8080:8080 panda06/online_inference:latest```
 
 №|  Задание | Баллы
 --- | --- | ---
