@@ -1,0 +1,5 @@
+general:
+  data_path: data/heart.csv
+  model_path: model.pkl
+  output_data_path: predicts.csv
+  extractor_path: extractor.pkl

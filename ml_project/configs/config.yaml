@@ -1,0 +1,10 @@
+defaults:
+  - model: rf
+  - splitting_params: default
+  - feature_params: all
+
+general:
+  data_path: data/heart.csv
+  model_output_path: model.pkl
+  extractor_output_path: extractor.pkl
+  metrics_path: metrics.json

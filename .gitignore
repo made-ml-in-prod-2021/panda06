@@ -1,0 +1,6 @@
+*zip
+.idea
+outputs/
+*pkl
+*.ipynb_checkpoints/
+__pycache__/
