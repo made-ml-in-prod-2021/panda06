@@ -7,8 +7,8 @@ import uvicorn
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, conlist
 
-from extractor_singleton import FeatureExtractorSingleton
-from model_singleton import ModelSingleton
+from src.extractor_singleton import FeatureExtractorSingleton
+from src.model_singleton import ModelSingleton
 
 app = FastAPI()
 logger = logging.getLogger(__name__)
