@@ -1,9 +1,12 @@
+import os
 from datetime import datetime
 
 from airflow import DAG
+from airflow.operators.dummy import DummyOperator
 from airflow.providers.docker.operators.docker import DockerOperator
+from airflow.sensors.filesystem import FileSensor
 
-from constants import DEFAULT_ARGS, MODEL_DIR, PROCESSED_DATA_DIR, RAW_DATA_DIR, VOLUME_DIR
+from constants import DEFAULT_ARGS, MODEL_DIR, PROCESSED_DATA_DIR, RAW_DATA_DIR, SENSOR_RAW_DATA_DIR, VOLUME_DIR
 
 with DAG(
         dag_id="train",
@@ -11,6 +14,15 @@ with DAG(
         schedule_interval="@daily",
         start_date=datetime.now()) as dag:
 
+    t0 = DummyOperator(task_id='begin')
+
+    data_wait = FileSensor(
+        task_id='data_wait',
+        poke_interval=10,
+        fs_conn_id='fs',
+        retries=100,
+        filepath=os.path.join(SENSOR_RAW_DATA_DIR, 'data.csv')
+    )
     preprocess = DockerOperator(
         image="airflow-train",
         command=f"--input_dir {RAW_DATA_DIR} "
@@ -51,4 +63,4 @@ with DAG(
         volumes=[f"{VOLUME_DIR}:/data"],
         entrypoint="python validate.py"
     )
-    preprocess >> data_split >> train_model >> validate_model
+    t0 >> data_wait >> preprocess >> data_split >> train_model >> validate_model
