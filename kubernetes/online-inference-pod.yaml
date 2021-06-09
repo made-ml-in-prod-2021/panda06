@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: online-inference
+spec:
+  containers:
+    - name: inference
+      image: panda06/online_inference:latest
+      ports:
+        - name: api
+          containerPort: 8080
+          protocol: TCP
