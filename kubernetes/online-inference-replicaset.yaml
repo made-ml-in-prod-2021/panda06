@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: online-inference
+  labels:
+    name: online-inference
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: online-inference
+  template:
+    metadata:
+      labels:
+        name: online-inference
+    spec:
+      containers:
+        - name: inference
+          image: panda06/online_inference:latest
+          ports:
+            - name: api
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "1"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
