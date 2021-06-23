@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: online-inference-probe
+spec:
+  containers:
+    - name: inference3
+      image: panda06/online_inference:v3
+      ports:
+        - name: api
+          containerPort: 8080
+          protocol: TCP
+      resources:
+        requests:
+          memory: "100Mi"
+          cpu: "1"
+        limits:
+          memory: "1Gi"
+          cpu: "1"
+
+      readinessProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        initialDelaySeconds: 20
+        periodSeconds: 5
+
+      livenessProbe:
+        httpGet:
+          path: /live_check
+          port: 8080
+        initialDelaySeconds: 40
+        periodSeconds: 5
